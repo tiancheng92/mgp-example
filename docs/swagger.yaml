@@ -1,0 +1,223 @@
+definitions:
+  mgp.PaginateInfo:
+    properties:
+      page:
+        description: 页数
+        type: integer
+      page_size:
+        description: 每页数据量
+        type: integer
+      total:
+        description: 数据总数
+        type: integer
+    type: object
+  mgp.Result-array_string:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      data:
+        description: 返回数据/错误详细信息
+        items:
+          type: string
+        type: array
+      msg:
+        description: 请求结果
+        type: string
+    type: object
+  mgp.Result-mgp_ResultPaginateData-array_model_Audit:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      data:
+        allOf:
+        - $ref: '#/definitions/mgp.ResultPaginateData-array_model_Audit'
+        description: 返回数据/错误详细信息
+      msg:
+        description: 请求结果
+        type: string
+    type: object
+  mgp.Result-model_Audit:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      data:
+        allOf:
+        - $ref: '#/definitions/model.Audit'
+        description: 返回数据/错误详细信息
+      msg:
+        description: 请求结果
+        type: string
+    type: object
+  mgp.Result-string:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      data:
+        description: 返回数据/错误详细信息
+        type: string
+      msg:
+        description: 请求结果
+        type: string
+    type: object
+  mgp.ResultPaginateData-array_model_Audit:
+    properties:
+      items:
+        description: 数据详情列表
+        items:
+          $ref: '#/definitions/model.Audit'
+        type: array
+      paginate:
+        allOf:
+        - $ref: '#/definitions/mgp.PaginateInfo'
+        description: 分页信息
+    type: object
+  model.Audit:
+    properties:
+      content:
+        items:
+          type: integer
+        type: array
+      created_at:
+        type: string
+      failed_reason:
+        type: string
+      id:
+        type: integer
+      new_data:
+        items:
+          type: integer
+        type: array
+      operation:
+        type: string
+      original_data:
+        items:
+          type: integer
+        type: array
+      status:
+        $ref: '#/definitions/model.AuditStatus'
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  model.AuditStatus:
+    enum:
+    - success
+    - failed
+    - running
+    type: string
+    x-enum-varnames:
+    - AuditSuccess
+    - AuditFailed
+    - AuditRunning
+  url.Values:
+    additionalProperties:
+      items:
+        type: string
+      type: array
+    type: object
+info:
+  contact: {}
+  title: My Gin Plus Example API
+  version: "2.0"
+paths:
+  /api/audit:
+    get:
+      description: List audit records
+      parameters:
+      - description: 排序方式
+        in: query
+        name: order
+        type: string
+      - description: 页数
+        in: query
+        name: page
+        type: integer
+      - description: 每页数据量
+        in: query
+        name: page_size
+        type: integer
+      - description: 关键字搜索
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mgp.Result-mgp_ResultPaginateData-array_model_Audit'
+      security:
+      - ApiKeyAuth: []
+      summary: List audit records
+      tags:
+      - Audit Record
+  /api/audit/{pk}:
+    get:
+      description: Get audit record by ID
+      parameters:
+      - in: path
+        name: pk
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mgp.Result-model_Audit'
+      security:
+      - ApiKeyAuth: []
+      summary: Get audit record by ID
+      tags:
+      - Audit Record
+  /api/user:
+    get:
+      description: Get user info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mgp.Result-string'
+      security:
+      - ApiKeyAuth: []
+      summary: Get user info
+      tags:
+      - User
+  /api/user/{auth_type}:
+    get:
+      description: Get user auth list
+      parameters:
+      - in: path
+        name: auth_type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mgp.Result-array_string'
+      security:
+      - ApiKeyAuth: []
+      summary: Get user auth list
+      tags:
+      - User
+schemes:
+- https
+- http
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
