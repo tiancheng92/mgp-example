@@ -10,7 +10,6 @@ import (
 	"mgp_example/pkg/middleware/handle_audit"
 	"mgp_example/pkg/middleware/handle_error"
 	_ "mgp_example/pkg/validator"
-	"net/http"
 	"time"
 
 	ginzap "github.com/gin-contrib/zap"
@@ -47,18 +46,6 @@ func InitRouter() *mgp.Engine {
 	r.RawGET("/healthz", universal.HealthCheck)
 
 	r.RawGET("/swagger/*any", ginSwagger.WrapHandler())
-
-	r.GET("", func(c *mgp.Context) {
-		c.HR(func() (any, error) {
-			return 123, nil
-		})
-	}).
-		SetTags("temp").
-		SetSummary("return 123").
-		SetReturns(&mgp.ReturnType{
-			StatusCode: http.StatusOK,
-			Body:       new(mgp.Result[int]),
-		})
 
 	apiGroup := r.Group("/api", auth.Check)
 	{
