@@ -1,6 +1,6 @@
 package main
 
-import "mgp_example/controller"
+import "mgp_example/internal/controller"
 
 // @title						My Gin Plus Example API
 // @version					2.0

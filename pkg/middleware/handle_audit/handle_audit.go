@@ -1,7 +1,7 @@
 package handle_audit
 
 import (
-	"mgp_example/service"
+	"mgp_example/internal/service"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tiancheng92/mgp"

@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"mgp_example/controller/api"
-	"mgp_example/controller/api/universal"
 	_ "mgp_example/docs"
+	"mgp_example/internal/controller/api"
+	"mgp_example/internal/controller/api/universal"
 	"mgp_example/pkg/log"
 	"mgp_example/pkg/middleware/auth"
 	"mgp_example/pkg/middleware/cross_domain"
@@ -26,7 +26,7 @@ func InitRouter() *mgp.Engine {
 
 	r := mgp.New()
 
-	r.Engine.Use(
+	r.Use(
 		ginzap.GinzapWithConfig(log.GetLogger(), &ginzap.Config{
 			TimeFormat: time.DateTime,
 			UTC:        true,
@@ -40,13 +40,19 @@ func InitRouter() *mgp.Engine {
 		cross_domain.CrossDomain(),
 	)
 
-	r.Engine.NoRoute(universal.NoRoute)
+	r.NoRoute(universal.NoRoute)
 
-	r.Engine.GET("/healthz", universal.HealthCheck)
+	r.NoMethod(universal.NoMethod)
 
-	r.Engine.GET("/swagger/*any", ginSwagger.WrapHandler())
+	r.RawGET("/healthz", universal.HealthCheck)
 
-	r.GET("", Get123).
+	r.RawGET("/swagger/*any", ginSwagger.WrapHandler())
+
+	r.GET("", func(c *mgp.Context) {
+		c.HR(func() (any, error) {
+			return 123, nil
+		})
+	}).
 		SetTags("temp").
 		SetSummary("return 123").
 		SetReturns(&mgp.ReturnType{
@@ -60,10 +66,4 @@ func InitRouter() *mgp.Engine {
 		api.NewAuditRouter(apiGroup)
 	}
 	return r
-}
-
-func Get123(c *mgp.Context) {
-	c.HR(func() (any, error) {
-		return 123, nil
-	})
 }

@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 	"mgp_example/config"
-	"mgp_example/controller"
+	"mgp_example/internal/controller"
 	"mgp_example/pkg/log"
 
 	"net/http"

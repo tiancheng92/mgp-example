@@ -1,8 +1,8 @@
 package api
 
 import (
-	"mgp_example/service"
-	"mgp_example/type/request"
+	"mgp_example/internal/service"
+	"mgp_example/internal/type/request"
 	"net/http"
 
 	"github.com/tiancheng92/mgp"

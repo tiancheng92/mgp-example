@@ -2,10 +2,10 @@ package service
 
 import (
 	"fmt"
+	"mgp_example/internal/service/audit"
+	"mgp_example/internal/store/model"
+	"mgp_example/internal/store/repository"
 	"mgp_example/pkg/log"
-	"mgp_example/service/audit"
-	"mgp_example/store/model"
-	"mgp_example/store/repository"
 
 	"github.com/bytedance/sonic"
 	"github.com/tiancheng92/mgp"

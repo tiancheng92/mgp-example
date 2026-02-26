@@ -2,7 +2,7 @@ package store
 
 import (
 	"mgp_example/config"
-	"mgp_example/store/model"
+	"mgp_example/internal/store/model"
 	"time"
 
 	"gorm.io/driver/mysql"

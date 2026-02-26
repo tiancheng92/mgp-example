@@ -1,8 +1,8 @@
 package repository
 
 import (
+	"mgp_example/internal/store/model"
 	"mgp_example/pkg/ecode"
-	"mgp_example/store/model"
 
 	"github.com/tiancheng92/mgp/errors"
 )

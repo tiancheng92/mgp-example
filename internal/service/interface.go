@@ -1,8 +1,8 @@
 package service
 
 import (
-	"mgp_example/service/audit"
-	"mgp_example/store/model"
+	"mgp_example/internal/service/audit"
+	"mgp_example/internal/store/model"
 
 	ump_sdk "github.com/Yostardev/ump-sdk"
 	"github.com/tiancheng92/mgp"

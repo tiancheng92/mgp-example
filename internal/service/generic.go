@@ -1,10 +1,10 @@
 package service
 
 import (
-	"mgp_example/service/audit"
-	"mgp_example/store/model"
-	"mgp_example/store/repository"
-	"mgp_example/type/request"
+	"mgp_example/internal/service/audit"
+	"mgp_example/internal/store/model"
+	"mgp_example/internal/store/repository"
+	"mgp_example/internal/type/request"
 	"reflect"
 
 	"github.com/Yostardev/gf"

@@ -1,6 +1,6 @@
 package request
 
-import "mgp_example/store/model"
+import "mgp_example/internal/store/model"
 
 type Interface interface {
 	FormatToModel() model.Interface

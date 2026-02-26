@@ -1,10 +1,10 @@
 package repository
 
 import (
+	"mgp_example/internal/store"
+	"mgp_example/internal/store/model"
 	"mgp_example/pkg/ecode"
 	"mgp_example/pkg/log"
-	"mgp_example/store"
-	"mgp_example/store/model"
 	"net/url"
 	"strings"
 

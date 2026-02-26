@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"mgp_example/store/model"
+	"mgp_example/internal/store/model"
 	"net/url"
 
 	"github.com/tiancheng92/mgp"

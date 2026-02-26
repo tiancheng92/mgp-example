@@ -12,3 +12,7 @@ import (
 func NoRoute(ctx *gin.Context) {
 	mgp.Response(ctx, nil, errors.WithCode(ecode.ErrClientPageNotFound, "Page not found"))
 }
+
+func NoMethod(ctx *gin.Context) {
+	mgp.Response(ctx, nil, errors.WithCode(ecode.ErrClientMethNotAllow, "Method not allow"))
+}
