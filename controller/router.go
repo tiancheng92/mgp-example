@@ -10,6 +10,7 @@ import (
 	"mgp_example/pkg/middleware/handle_audit"
 	"mgp_example/pkg/middleware/handle_error"
 	_ "mgp_example/pkg/validator"
+	"net/http"
 	"time"
 
 	ginzap "github.com/gin-contrib/zap"
@@ -20,9 +21,12 @@ import (
 
 // InitRouter 初始化路由
 func InitRouter() *mgp.Engine {
+	mgp.SetSuccessMsg("OK")
+	mgp.SetSuccessCode(0)
+
 	r := mgp.New()
 
-	r.Use(
+	r.Engine.Use(
 		ginzap.GinzapWithConfig(log.GetLogger(), &ginzap.Config{
 			TimeFormat: time.DateTime,
 			UTC:        true,
@@ -36,11 +40,19 @@ func InitRouter() *mgp.Engine {
 		cross_domain.CrossDomain(),
 	)
 
-	r.NoRoute(universal.NoRoute)
+	r.Engine.NoRoute(universal.NoRoute)
 
-	r.GET("healthz", universal.HealthCheck)
+	r.Engine.GET("/healthz", universal.HealthCheck)
 
-	r.GET("/swagger/*any", ginSwagger.WrapHandler())
+	r.Engine.GET("/swagger/*any", ginSwagger.WrapHandler())
+
+	r.GET("", Get123).
+		SetTags("temp").
+		SetSummary("return 123").
+		SetReturns(&mgp.ReturnType{
+			StatusCode: http.StatusOK,
+			Body:       new(mgp.Result[int]),
+		})
 
 	apiGroup := r.Group("/api", auth.Check)
 	{
@@ -48,4 +60,10 @@ func InitRouter() *mgp.Engine {
 		api.NewAuditRouter(apiGroup)
 	}
 	return r
+}
+
+func Get123(c *mgp.Context) {
+	c.HR(func() (any, error) {
+		return 123, nil
+	})
 }

@@ -2,13 +2,10 @@ definitions:
   mgp.PaginateInfo:
     properties:
       page:
-        description: 页数
         type: integer
       page_size:
-        description: 每页数据量
         type: integer
       total:
-        description: 数据总数
         type: integer
     type: object
   mgp.Result-array_string:
@@ -21,6 +18,18 @@ definitions:
         items:
           type: string
         type: array
+      msg:
+        description: 请求结果
+        type: string
+    type: object
+  mgp.Result-int:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      data:
+        description: 返回数据/错误详细信息
+        type: integer
       msg:
         description: 请求结果
         type: string
@@ -125,24 +134,35 @@ info:
   title: My Gin Plus Example API
   version: "2.0"
 paths:
+  /:
+    get:
+      description: return 123
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/mgp.Result-int'
+      security:
+      - ApiKeyAuth: []
+      summary: return 123
+      tags:
+      - temp
   /api/audit:
     get:
       description: List audit records
       parameters:
-      - description: 排序方式
-        in: query
+      - in: query
         name: order
         type: string
-      - description: 页数
-        in: query
+      - in: query
         name: page
         type: integer
-      - description: 每页数据量
-        in: query
+      - in: query
         name: page_size
         type: integer
-      - description: 关键字搜索
-        in: query
+      - in: query
         name: search
         type: string
       produces:
