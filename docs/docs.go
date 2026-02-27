@@ -65,7 +65,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/mgp.Result-mgp_ResultPaginateData-array_model_Audit"
+                            "$ref": "#/definitions/mgp.Result-mgp_PaginateData-array_model_Audit"
                         }
                     }
                 }
@@ -103,62 +103,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/user": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "用户"
-                ],
-                "summary": "获取用户信息",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mgp.Result-string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/user/{auth_type}": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "用户"
-                ],
-                "summary": "获取用户权限列表",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "name": "auth_type",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mgp.Result-array_string"
-                        }
-                    }
-                }
-            }
-        },
         "/{pk}": {
             "get": {
                 "parameters": [
@@ -178,9 +122,18 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "mgp.PaginateInfo": {
+        "mgp.PaginateData-array_model_Audit": {
             "type": "object",
             "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/model.Audit"
+                        }
+                    }
+                },
                 "page": {
                     "type": "integer"
                 },
@@ -192,27 +145,7 @@ const docTemplate = `{
                 }
             }
         },
-        "mgp.Result-array_string": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "description": "状态码",
-                    "type": "integer"
-                },
-                "data": {
-                    "description": "返回数据/错误详细信息",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "msg": {
-                    "description": "请求结果",
-                    "type": "string"
-                }
-            }
-        },
-        "mgp.Result-mgp_ResultPaginateData-array_model_Audit": {
+        "mgp.Result-mgp_PaginateData-array_model_Audit": {
             "type": "object",
             "properties": {
                 "code": {
@@ -223,7 +156,7 @@ const docTemplate = `{
                     "description": "返回数据/错误详细信息",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/mgp.ResultPaginateData-array_model_Audit"
+                            "$ref": "#/definitions/mgp.PaginateData-array_model_Audit"
                         }
                     ]
                 },
@@ -251,43 +184,6 @@ const docTemplate = `{
                 "msg": {
                     "description": "请求结果",
                     "type": "string"
-                }
-            }
-        },
-        "mgp.Result-string": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "description": "状态码",
-                    "type": "integer"
-                },
-                "data": {
-                    "description": "返回数据/错误详细信息",
-                    "type": "string"
-                },
-                "msg": {
-                    "description": "请求结果",
-                    "type": "string"
-                }
-            }
-        },
-        "mgp.ResultPaginateData-array_model_Audit": {
-            "type": "object",
-            "properties": {
-                "items": {
-                    "description": "数据详情列表",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Audit"
-                    }
-                },
-                "paginate": {
-                    "description": "分页信息",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/mgp.PaginateInfo"
-                        }
-                    ]
                 }
             }
         },

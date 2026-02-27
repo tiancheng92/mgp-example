@@ -59,9 +59,9 @@ func InitRouter() *mgp.Engine {
 		c.BindParams(p).HR(func() (any, error) {
 			return p.PrimaryKey, nil
 		})
-	}).SetPathForSwagger(new(request.PrimaryKey))
+	}).SwaggerPath(new(request.PrimaryKey))
 
-	apiGroup := r.Group("/api", auth.Check).SetUseApiKeyAuthForSwagger()
+	apiGroup := r.Group("/api", auth.Check).SwaggerUseApiKeyAuth()
 	{
 		api.NewUserRouter(apiGroup)
 		api.NewAuditRouter(apiGroup)

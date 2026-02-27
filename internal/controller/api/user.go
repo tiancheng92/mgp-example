@@ -3,7 +3,6 @@ package api
 import (
 	"mgp_example/internal/service"
 	"mgp_example/internal/type/request"
-	"net/http"
 
 	"github.com/tiancheng92/mgp"
 )
@@ -14,21 +13,15 @@ type userController struct {
 
 func NewUserRouter(group *mgp.RouterGroup) {
 	c := &userController{service.NewUserService()}
-	g := group.Group("user").SetTagsForSwagger("用户")
+	g := group.Group("user").SwaggerTags("用户")
 	{
 		g.GET(":auth_type", c.GetAuthList).
-			SetSummaryForSwagger("获取用户权限列表").
-			SetPathForSwagger(new(request.AuthType)).
-			SetReturnsForSwagger(&mgp.ReturnType{
-				StatusCode: http.StatusOK,
-				Body:       new(mgp.Result[[]string]),
-			})
+			SwaggerSummary("获取用户权限列表").
+			SwaggerPath(new(request.AuthType)).
+			SwaggerReturns(mgp.RT[[]string]())
 		g.GET("", c.GetUserInfo).
-			SetSummaryForSwagger("获取用户信息").
-			SetReturnsForSwagger(&mgp.ReturnType{
-				StatusCode: http.StatusOK,
-				Body:       new(mgp.Result[string]),
-			})
+			SwaggerSummary("获取用户信息").
+			SwaggerReturns(mgp.RT[string]())
 	}
 }
 
