@@ -15,19 +15,19 @@ type auditController struct {
 
 func NewAuditRouter(group *mgp.RouterGroup) {
 	c := &auditController{newReadOnlyGenericController[model.Audit](service.NewAuditService())}
-	g := group.Group("audit").SetTags("Audit Record")
+	g := group.Group("audit").SetTagsForSwagger("审计记录")
 	{
 		g.GET(":pk", c.Get).
-			SetSummary("Get audit record by ID").
-			SetPath(new(request.PrimaryKey)).
-			SetReturns(&mgp.ReturnType{
+			SetSummaryForSwagger("获取指定ID的审计记录").
+			SetPathForSwagger(new(request.PrimaryKey)).
+			SetReturnsForSwagger(&mgp.ReturnType{
 				StatusCode: http.StatusOK,
 				Body:       new(mgp.Result[model.Audit]),
 			})
 		g.GET("", c.List).
-			SetSummary("List audit records").
-			SetQuery(new(mgp.PaginateQuery)).
-			SetReturns(&mgp.ReturnType{
+			SetSummaryForSwagger("分页获取审计记录").
+			SetQueryForSwagger(new(mgp.PaginateQuery)).
+			SetReturnsForSwagger(&mgp.ReturnType{
 				StatusCode: http.StatusOK,
 				Body:       new(mgp.Result[mgp.ResultPaginateData[[]model.Audit]]),
 			})

@@ -182,8 +182,8 @@ github.com/tiancheng92/datatypes v0.0.2 h1:e7PIcK3R/71wMTcYvB5kSG4X8uHj+1qDrXyu9
 github.com/tiancheng92/datatypes v0.0.2/go.mod h1:iFsmQIpoy3A0T1rNVpeF6j8zPFAFc9MlpCy8U2xyYVQ=
 github.com/tiancheng92/gin-swagger v1.0.11 h1:uNFJ2GrH3JoVGoL9BchxKu0ST2Vn3rKj0+Iqi//WC2g=
 github.com/tiancheng92/gin-swagger v1.0.11/go.mod h1:YcPYPWioxCAc02QuUGD9DjO1CfJXzJRmq5za1JJNasE=
-github.com/tiancheng92/mgp v0.0.18 h1:THInBblcysEes5mHZTqt52Kt6UsNaErZUiWI/n6mHPE=
-github.com/tiancheng92/mgp v0.0.18/go.mod h1:/0eYljzwg0zcFXwveZDGCP1yjd8plsXYxi1AXd6L37k=
+github.com/tiancheng92/mgp v0.0.22 h1:m0sVQsEcT0T6sEsb97rHOaMgidlhSKNdRRuFk++9YXE=
+github.com/tiancheng92/mgp v0.0.22/go.mod h1:/0eYljzwg0zcFXwveZDGCP1yjd8plsXYxi1AXd6L37k=
 github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS4MhqMhdFk5YI=
 github.com/twitchyliquid64/golang-asm v0.15.1/go.mod h1:a1lVb/DtPvCB8fslRZhAngC2+aY1QWCk3Cedj/Gdt08=
 github.com/ugorji/go/codec v1.3.0 h1:Qd2W2sQawAfG8XSvzwhBeoGq71zXOC/Q1E9y/wUcsUA=

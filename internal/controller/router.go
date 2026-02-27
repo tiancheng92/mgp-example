@@ -4,6 +4,7 @@ import (
 	_ "mgp_example/docs"
 	"mgp_example/internal/controller/api"
 	"mgp_example/internal/controller/api/universal"
+	"mgp_example/internal/type/request"
 	"mgp_example/pkg/log"
 	"mgp_example/pkg/middleware/auth"
 	"mgp_example/pkg/middleware/cross_domain"
@@ -20,8 +21,8 @@ import (
 
 // InitRouter 初始化路由
 func InitRouter() *mgp.Engine {
-	mgp.SetSuccessMsg("OK")
-	mgp.SetSuccessCode(0)
+	//mgp.SetSuccessMsg("OK")
+	//mgp.SetSuccessCode(0)
 
 	r := mgp.New()
 
@@ -51,12 +52,16 @@ func InitRouter() *mgp.Engine {
 		c.HR(func() (any, error) {
 			return 1, nil
 		})
-	}).SetTags("tmp").SetReturns(&mgp.ReturnType{
-		StatusCode: 200,
-		Body:       new(mgp.Result[int]),
 	})
 
-	apiGroup := r.Group("/api", auth.Check).SetUseApiKeyAuth()
+	r.GET(":pk", func(c *mgp.Context) {
+		p := new(request.PrimaryKey)
+		c.BindParams(p).HR(func() (any, error) {
+			return p.PrimaryKey, nil
+		})
+	}).SetPathForSwagger(new(request.PrimaryKey))
+
+	apiGroup := r.Group("/api", auth.Check).SetUseApiKeyAuthForSwagger()
 	{
 		api.NewUserRouter(apiGroup)
 		api.NewAuditRouter(apiGroup)

@@ -14,18 +14,18 @@ type userController struct {
 
 func NewUserRouter(group *mgp.RouterGroup) {
 	c := &userController{service.NewUserService()}
-	g := group.Group("user").SetTags("User")
+	g := group.Group("user").SetTagsForSwagger("用户")
 	{
 		g.GET(":auth_type", c.GetAuthList).
-			SetSummary("Get user auth list").
-			SetPath(new(request.AuthType)).
-			SetReturns(&mgp.ReturnType{
+			SetSummaryForSwagger("获取用户权限列表").
+			SetPathForSwagger(new(request.AuthType)).
+			SetReturnsForSwagger(&mgp.ReturnType{
 				StatusCode: http.StatusOK,
 				Body:       new(mgp.Result[[]string]),
 			})
 		g.GET("", c.GetUserInfo).
-			SetSummary("Get user info").
-			SetReturns(&mgp.ReturnType{
+			SetSummaryForSwagger("获取用户信息").
+			SetReturnsForSwagger(&mgp.ReturnType{
 				StatusCode: http.StatusOK,
 				Body:       new(mgp.Result[string]),
 			})

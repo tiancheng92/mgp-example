@@ -18,18 +18,9 @@ const docTemplate = `{
     "paths": {
         "/": {
             "get": {
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "tmp"
-                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/mgp.Result-int"
-                        }
+                        "description": "OK"
                     }
                 }
             }
@@ -41,14 +32,13 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "List audit records",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Audit Record"
+                    "审计记录"
                 ],
-                "summary": "List audit records",
+                "summary": "分页获取审计记录",
                 "parameters": [
                     {
                         "type": "string",
@@ -88,14 +78,13 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Get audit record by ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Audit Record"
+                    "审计记录"
                 ],
-                "summary": "Get audit record by ID",
+                "summary": "获取指定ID的审计记录",
                 "parameters": [
                     {
                         "type": "integer",
@@ -121,14 +110,13 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Get user info",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
-                "summary": "Get user info",
+                "summary": "获取用户信息",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -146,14 +134,13 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "Get user auth list",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
-                "summary": "Get user auth list",
+                "summary": "获取用户权限列表",
                 "parameters": [
                     {
                         "type": "string",
@@ -168,6 +155,23 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/mgp.Result-array_string"
                         }
+                    }
+                }
+            }
+        },
+        "/{pk}": {
+            "get": {
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "pk",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
                     }
                 }
             }
@@ -201,23 +205,6 @@ const docTemplate = `{
                     "items": {
                         "type": "string"
                     }
-                },
-                "msg": {
-                    "description": "请求结果",
-                    "type": "string"
-                }
-            }
-        },
-        "mgp.Result-int": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "description": "状态码",
-                    "type": "integer"
-                },
-                "data": {
-                    "description": "返回数据/错误详细信息",
-                    "type": "integer"
                 },
                 "msg": {
                     "description": "请求结果",
