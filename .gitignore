@@ -1,4 +1,4 @@
 /goswag.go
 /*.http
 /test/*
-/config_file/*
+/config_file/config.yaml
