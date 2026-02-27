@@ -25,8 +25,7 @@ type ReadOnlyGenericInterface[M model.Interface] interface {
 
 type AuditServiceInterface interface {
 	ReadOnlyGenericInterface[model.Audit]
-	New(ctx *mgp.Context, operation string, opts ...audit.Option) error
-	Handle(auditInfo *AuditInfo, err error)
+	New(ctx *mgp.Context, operation string, opts ...audit.Option) (*AuditInfo, error)
 }
 
 type UserServiceInterface interface {

@@ -18,7 +18,7 @@ func HandleAudit(ctx *gin.Context) {
 					err = errData
 				}
 			}
-			go service.NewAuditService().Handle(auditInfo, err)
+			auditInfo.Handle(err)
 		}
 	}
 }

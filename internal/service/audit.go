@@ -26,52 +26,8 @@ type AuditInfo struct {
 	ID uint64
 }
 
-func (s *auditService) New(ctx *mgp.Context, operation string, opts ...audit.Option) error {
-	var setting audit.Setting
-	for i := range opts {
-		opts[i](&setting)
-	}
-
-	user, err := s.userSvc.GetUserInfo(ctx)
-	if err != nil {
-		return err
-	}
-
-	odb, err := sonic.Marshal(setting.OriginalData)
-	if err != nil {
-		return err
-	}
-
-	ndb, err := sonic.Marshal(setting.NewData)
-	if err != nil {
-		return err
-	}
-
-	content, err := sonic.Marshal(setting.Content)
-	if err != nil {
-		return err
-	}
-
-	data, err := s.auditRepo.Create(model.Audit{
-		Username:     fmt.Sprintf("%s(%s)", user.Name, user.Username),
-		Operation:    operation,
-		Content:      content,
-		OriginalData: odb,
-		NewData:      ndb,
-		Status:       model.AuditRunning,
-	})
-	if err != nil {
-		return err
-	}
-
-	ctx.Set("audit_info", &AuditInfo{
-		ID: data.ID,
-	})
-	return nil
-}
-
-func (s *auditService) Handle(auditInfo *AuditInfo, err error) {
-	if auditInfo.ID == 0 {
+func (ai *AuditInfo) Handle(err error) {
+	if ai.ID == 0 {
 		return
 	}
 
@@ -88,8 +44,54 @@ func (s *auditService) Handle(auditInfo *AuditInfo, err error) {
 	}
 
 	go func() {
-		if err = s.auditRepo.UpdateStatus(auditInfo.ID, status, reason); err != nil {
+		if err = repository.NewAuditRepository().UpdateStatus(ai.ID, status, reason); err != nil {
 			log.Errorf("update audit status failed: %v", err)
 		}
 	}()
+}
+
+func (s *auditService) New(ctx *mgp.Context, operation string, opts ...audit.Option) (*AuditInfo, error) {
+	var setting audit.Setting
+	for i := range opts {
+		opts[i](&setting)
+	}
+
+	user, err := s.userSvc.GetUserInfo(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	odb, err := sonic.Marshal(setting.OriginalData)
+	if err != nil {
+		return nil, err
+	}
+
+	ndb, err := sonic.Marshal(setting.NewData)
+	if err != nil {
+		return nil, err
+	}
+
+	content, err := sonic.Marshal(setting.Content)
+	if err != nil {
+		return nil, err
+	}
+
+	data, err := s.auditRepo.Create(model.Audit{
+		Username:     fmt.Sprintf("%s(%s)", user.Name, user.Username),
+		Operation:    operation,
+		Content:      content,
+		OriginalData: odb,
+		NewData:      ndb,
+		Status:       model.AuditRunning,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	ai := &AuditInfo{
+		ID: data.ID,
+	}
+
+	ctx.Set("audit_info", ai)
+	return ai, nil
 }

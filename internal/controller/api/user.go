@@ -14,10 +14,9 @@ type userController struct {
 
 func NewUserRouter(group *mgp.RouterGroup) {
 	c := &userController{service.NewUserService()}
-	g := group.Group("user")
+	g := group.Group("user").SetTags("User")
 	{
 		g.GET(":auth_type", c.GetAuthList).
-			SetTags("User").
 			SetSummary("Get user auth list").
 			SetPath(new(request.AuthType)).
 			SetReturns(&mgp.ReturnType{
@@ -25,7 +24,6 @@ func NewUserRouter(group *mgp.RouterGroup) {
 				Body:       new(mgp.Result[[]string]),
 			})
 		g.GET("", c.GetUserInfo).
-			SetTags("User").
 			SetSummary("Get user info").
 			SetReturns(&mgp.ReturnType{
 				StatusCode: http.StatusOK,

@@ -15,10 +15,9 @@ type auditController struct {
 
 func NewAuditRouter(group *mgp.RouterGroup) {
 	c := &auditController{newReadOnlyGenericController[model.Audit](service.NewAuditService())}
-	g := group.Group("audit")
+	g := group.Group("audit").SetTags("Audit Record")
 	{
 		g.GET(":pk", c.Get).
-			SetTags("Audit Record").
 			SetSummary("Get audit record by ID").
 			SetPath(new(request.PrimaryKey)).
 			SetReturns(&mgp.ReturnType{
@@ -26,7 +25,6 @@ func NewAuditRouter(group *mgp.RouterGroup) {
 				Body:       new(mgp.Result[model.Audit]),
 			})
 		g.GET("", c.List).
-			SetTags("Audit Record").
 			SetSummary("List audit records").
 			SetQuery(new(mgp.PaginateQuery)).
 			SetReturns(&mgp.ReturnType{

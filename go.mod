@@ -17,7 +17,7 @@ require (
 	github.com/swaggo/swag/v2 v2.0.0-rc4
 	github.com/tiancheng92/datatypes v0.0.2
 	github.com/tiancheng92/gin-swagger v1.0.11
-	github.com/tiancheng92/mgp v0.0.16
+	github.com/tiancheng92/mgp v0.0.18
 	go.uber.org/zap v1.27.1
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.31.1

@@ -136,7 +136,6 @@ info:
 paths:
   /:
     get:
-      description: return 123
       produces:
       - application/json
       responses:
@@ -144,11 +143,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/mgp.Result-int'
-      security:
-      - ApiKeyAuth: []
-      summary: return 123
       tags:
-      - temp
+      - tmp
   /api/audit:
     get:
       description: List audit records

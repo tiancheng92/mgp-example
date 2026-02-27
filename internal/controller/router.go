@@ -47,7 +47,16 @@ func InitRouter() *mgp.Engine {
 
 	r.RawGET("/swagger/*any", ginSwagger.WrapHandler())
 
-	apiGroup := r.Group("/api", auth.Check)
+	r.GET("", func(c *mgp.Context) {
+		c.HR(func() (any, error) {
+			return 1, nil
+		})
+	}).SetTags("tmp").SetReturns(&mgp.ReturnType{
+		StatusCode: 200,
+		Body:       new(mgp.Result[int]),
+	})
+
+	apiGroup := r.Group("/api", auth.Check).SetUseApiKeyAuth()
 	{
 		api.NewUserRouter(apiGroup)
 		api.NewAuditRouter(apiGroup)

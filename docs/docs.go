@@ -18,19 +18,12 @@ const docTemplate = `{
     "paths": {
         "/": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "return 123",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "temp"
+                    "tmp"
                 ],
-                "summary": "return 123",
                 "responses": {
                     "200": {
                         "description": "OK",

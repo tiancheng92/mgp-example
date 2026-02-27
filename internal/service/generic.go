@@ -50,7 +50,7 @@ func toModel[M model.Interface](requestPtr any) M {
 }
 
 func (s *genericService[M]) Create(ctx *mgp.Context, request any) (*M, error) {
-	if err := s.audit.New(
+	if _, err := s.audit.New(
 		ctx,
 		gf.StringJoin("Create ", (*new(M)).GetTableName()),
 		audit.WithNewData(request),
@@ -67,7 +67,7 @@ func (s *genericService[M]) Update(ctx *mgp.Context, pk any, request any) (*M, e
 		return nil, err
 	}
 
-	if err = s.audit.New(
+	if _, err = s.audit.New(
 		ctx,
 		gf.StringJoin("Update ", (*new(M)).GetTableName()),
 		audit.WithContent(audit.CM{"id": pk}),
@@ -84,7 +84,7 @@ func (s *genericService[M]) Delete(ctx *mgp.Context, pk any) error {
 		return err
 	}
 
-	if err = s.audit.New(
+	if _, err = s.audit.New(
 		ctx,
 		gf.StringJoin("Delete ", (*new(M)).GetTableName()),
 		audit.WithContent(audit.CM{"id": pk}),
